@@ -9,20 +9,9 @@ class Food
 	
 
 public:
-	void Draw(int cellSize)
-	{
-		DrawRectangle(position.x * cellSize, position.y * cellSize, cellSize, cellSize, RED);
-	}
+	void Draw(int cellSize);
 
-	void Reposition(int cellCount)
-	{
-		float xPos = GetRandomValue(1, cellCount - 2);
-		float yPos = GetRandomValue(1, cellCount - 2);
-		position = { xPos, yPos };
-	}
+	void Reposition(int cellCount);
 
-	Vector2 GetFoodPosition() 
-	{
-		return position;
-	}
+	Vector2 GetFoodPosition();
 };
