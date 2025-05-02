@@ -128,9 +128,15 @@ int main ()
 
 			EndDrawing();
 		}
+		
 		BeginDrawing();
+		
 		std::string gameOver ="Game Over!\nScore: " + std::to_string(score);
 		DrawText(gameOver.c_str(), (GetScreenWidth() / 2) - 80, (GetScreenHeight() / 2) - 80,40, WHITE);
+
+		//snake.Die(cellSize); //needs debugging, should draw the snake, then remove the first element, the wait 2 seconds and repeat this process is done
+		//currently adds a new element to the front of the snake somehow and removes thta segment every frame and draws it every 200ms
+		
 		EndDrawing();
 	}
 

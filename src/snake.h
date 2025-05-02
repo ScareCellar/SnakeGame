@@ -2,21 +2,28 @@
 #include <deque>
 #include "raylib.h"
 #include "raymath.h"
+#include <chrono>
+#include <thread>
+#include <string>
 
 class Snake
 {
 	std::deque<Vector2> body = {Vector2{5,9}, Vector2{4,9}, Vector2{3,9} };
 	Vector2 direction = { 0,0 };
 
+	double lastUpdateTime = 0;
+
 public:
 	
 	void Draw(int cellSize)
 	{
-		for (unsigned int i = 0; i < body.size(); i++)
+		if (!body.empty())
 		{
-			int x = body[i].x;
-			int y = body[i].y;
-			DrawRectangle(x * cellSize, y * cellSize, cellSize, cellSize, DARKGREEN);
+			for (size_t i = 0; i < body.size(); i++)
+			{
+				Vector2 segment = body[i];
+				DrawRectangle((int)(segment.x * cellSize),(int)(segment.y * cellSize), cellSize, cellSize, DARKGREEN);
+			}
 		}
 	}
 
@@ -34,7 +41,11 @@ public:
 
 	Vector2 GetSnakeHead()
 	{
-		return body[0];
+		if (!body.empty())
+		{
+			return body[0];
+		}
+		return { 0,0 };
 	}
 
 	bool CheckForDead(int cellSize)
@@ -52,6 +63,18 @@ public:
 			return true;
 		}
 		return false;
+	}
+
+	void Die(int cellSize, std::string gameOver)
+	{
+		if (!body.empty())
+		{
+			body.pop_front();
+
+			DrawText(gameOver.c_str(), (GetScreenWidth() / 2) - 80, (GetScreenHeight() / 2) - 80, 40, WHITE);
+
+			WaitTime(0.2);
+		}
 	}
 };
 
